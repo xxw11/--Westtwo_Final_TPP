@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <title>登录页面</title>
+<!-- VENDOR CSS -->
+<link rel="stylesheet" href="{{ url_for("static",filename="assets/vendor/bootstrap/css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{#<link rel="stylesheet" href="{{ url_for("static",filename="assets/css/font-awesome.4.7.0.css") }}">#}
+<link rel="stylesheet" href="{{ url_for("static",filename="assets/vendor/animate-css/vivify.min.css") }}">
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="{{ url_for("static",filename="assets/css/site.css") }}">
+
+{% endblock %}
+{% block content %}
+<body class="theme-blush">
+
+    <div class="auth-main particles_js">
+        <div class="auth_div vivify popIn">
+            <div class="auth_brand">
+                <a class="navbar-brand" href="#"><img src="{{ url_for("static",filename="assets/images/icon.svg") }}" width="30" height="30" class="d-inline-block align-top mr-2" alt="">Brego</a>
+            </div>
+            <div class="card page-400">
+                <div class="pattern">
+                    <span class="red"></span>
+                    <span class="indigo"></span>
+                    <span class="blue"></span>
+                    <span class="green"></span>
+                    <span class="orange"></span>
+                </div>
+                <div class="header">
+                    <p class="lead"><span class="number left">404 </span><span class="text">Oops! <br/>Page Not Found</span></p>
+                </div>
+                <div class="body">
+                    <p>The page you were looking for could not be found, please <a href="javascript:void(0);">contact us</a> to report this issue.</p>
+                    <div class="margin-top-30">
+                        <a href="javascript:history.go(-1)" class="btn btn-round btn-default btn-block"><i class="fa fa-arrow-left"></i> <span>Go Back</span></a>
+                        <a href="{{url_for('news.index')}}" class="btn btn-round btn-primary btn-block"><i class="fa fa-home"></i> <span>Home</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="particles-js"></div>
+    </div>
+    <!-- END WRAPPER -->
+    <script src="{{ url_for("static",filename="assets/bundles/libscripts.bundle.js") }}"></script>
+    <script src="{{ url_for("static",filename="assets/bundles/vendorscripts.bundle.js") }}"></script>
+
+    <script src="{{ url_for("static",filename="assets/vendor/particlesjs/particles.min.js") }}"></script>
+    <script src="{{ url_for("static",filename="assets/bundles/mainscripts.bundle.js") }}"></script>
+    <script src="{{ url_for("static",filename="assets/js/pages/particlesjs.js") }}"></script>
+{% block scripts %}
+{#    {{ super() }}#}
+
+
+{% endblock %}
+
+{% endblock %}

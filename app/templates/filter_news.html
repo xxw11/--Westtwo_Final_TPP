@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <title>新闻审核</title>
+{#    <link rel="stylesheet" href="{{ url_for('static',filename='dplayer/dist/DPlayer.min.css') }}">#}
+
+{% endblock %}
+{% block content %}
+
+<body class="theme-blush news box_layout">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="{{ url_for("static",filename="assets/images/icon.svg") }}" width="40" height="40" alt="Brego"></div>
+        <p>Please wait...</p>
+    </div>
+</div>
+
+
+
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<div id="wrapper">
+
+
+
+    <div id="main-content">
+</body>
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="mail-inbox">
+                        <div class="mobile-left">
+                            <a href="javascript:void(0);" class="btn btn-primary toggle-email-nav"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <div class="mail-left">
+                            <div class="mail-compose m-b-20">
+                                <a href="{{ url_for("news.addnews") }}" class="btn btn-danger btn-block">创作新闻</a>
+                            </div>
+                            <div class="mail-side">
+                                <ul class="nav">
+                                    <li id="0"><a href="{{ url_for("news.filternews",type=0) }}"><i class="icon-drawer"></i>待审核</a></li>
+                                    <li id="1"><a href="{{ url_for("news.filternews",type=1) }}"><i class="icon-cursor"></i>已通过</a></li>
+                                    <li><a href="{{ url_for("news.filternews",type=4) }}"><i class="icon-action-redo"></i>未通过</a></li>
+                                    <li><a href="{{ url_for("news.filternews",type=2) }}"><i class="icon-trash"></i>已删除</a></li>
+                                    <li><a href="{{ url_for("news.filternews",type=3) }}"><i class="fa fa-arrows-alt"></i>所有</a></li>
+                                </ul>
+                                <h3 class="label">标签</h3>
+                                <ul class="nav">
+                                    <li><a href="javascript:void(0);"><i class="fa fa-circle-o text-danger"></i>未通过</a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-circle-o text-info"></i>待审核</a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-circle-o text-dark"></i>已删除</a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-circle-o text-primary"></i>已通过</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mail-right check-all-parent">
+                            <div class="header align-center">
+                                <form>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Mail" aria-label="Search Mail" aria-describedby="search-mail">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="search-mail"><i class="icon-magnifier"></i></span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="mail-action clearfix">
+                                <div class="pull-left">
+{#                                    <div class="fancy-checkbox d-inline-block">#}
+{#                                        <label>#}
+{#                                            <input class="check-all" type="checkbox" name="checkbox">#}
+{#                                            <span></span>#}
+{#                                        </label>#}
+{#                                    </div>#}
+{#                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i class="icon-trash"></i></a>#}
+{#                                    <a href="javascript:void(0);" class="btn btn-light btn-sm hidden-sm"><i class="icon-refresh"></i></a>#}
+{#                                    <div class="btn-group">#}
+{#                                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-tag"></i></button>#}
+{#                                        <div class="dropdown-menu">#}
+{#                                            <a class="dropdown-item" href="javascript:void(0);">Tag 1</a>#}
+{#                                            <a class="dropdown-item" href="javascript:void(0);">Tag 2</a>#}
+{#                                            <a class="dropdown-item" href="javascript:void(0);">Tag 3</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+                                </div>
+                                <div class="pull-right ml-auto">
+                                    <div class="pagination-email d-flex">
+                                        <p>1-50/295</p>
+                                        <div class="btn-group m-l-20">3
+                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-angle-left"></i></button>
+                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-angle-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mail-list">
+                                <ul class="list-unstyled">
+
+                                    {% for new in news %}
+                                        <li class="clearfix">
+                                            <div class="mail-detail-left">
+                                            {% if new.status==0 %}
+
+                                                    <i class="fa fa-circle-o text-info"></i>
+
+                                                {% endif %}
+                                            {% if new.status==2 %}
+
+                                                    <i class="fa fa-circle-o text-dark"></i>
+
+                                                {% endif %}
+                                            {% if new.status==1 %}
+
+                                                    <i class="fa fa-circle-o text-primary"></i>
+
+                                                {% endif %}
+                                                {% if new.status==4 %}
+
+                                                    <i class="fa fa-circle-o text-danger"></i>
+
+                                                {% endif %}
+                                                <a href="{{ url_for('news.changestatus',id=new.id,status=1) }}"><i class="icon-check"></i></a>
+                                                <a href="{{ url_for('news.changestatus',id=new.id,status=4) }}"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="mail-detail-right">
+                                                <img class="rounded" src="{{ url_for("static",filename="uploads/index_image") }}" alt="">
+                                                <p class="sub"><a href="{{ url_for('news.readnews',id=new.id) }}" class="mail-detail-expand">{{ new.title }}</a></p>
+                                                <p class="dep"><span class="m-r-10">ID:{{ new.user_id }}</span>{{ new.digest }}</p>
+                                                <span class="time">{{ new.update_time }}</span>
+                                            </div>
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{ url_for("static",filename="assets/bundles/libscripts.bundle.js") }}"></script>
+        <script src="{{ url_for("static",filename="assets/bundles/vendorscripts.bundle.js") }}"></script>
+        <script src="{{ url_for("static",filename="assets/bundles/mainscripts.bundle.js") }}"></script>
+        <script src="{{ url_for('static',filename='dplayer/plugin/flv.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='dplayer/plugin/hls.min.js') }}"></script>
+        {#    <script src="{{ url_for('static',filename='dplayer/dist/DPlayer.min.js') }}"></script>#}
+        {#            <script>#}
+        {#        var dp1 = new DPlayer({#}
+        {#            element: document.getElementById('dplayer1'),#}
+        {#            video: {#}
+        {#                url: "{{ url_for('static',filename='uploads/videos/WarriorsCG.mp4') }}",#}
+        {#            },#}
+        {##}
+        {#        });#}
+        {#    </script>#}
+    </div>
+
+{% block scripts %}
+
+
+{% endblock %}
+
+{% endblock %}

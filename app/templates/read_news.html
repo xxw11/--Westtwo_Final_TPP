@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <title>{{ news.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='dplayer/dist/DPlayer.min.css') }}">
+
+{% endblock %}
+
+{% block content %}
+
+<body class="theme-blush news box_layout">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="{{ url_for("static",filename="assets/images/icon.svg") }}" width="40" height="40" alt="Brego"></div>
+        <p>Please wait...</p>
+    </div>
+</div>
+
+
+
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+
+
+    <div id="main-content">
+        <div class="container">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-md-6 col-sm-12">
+                        <h1>{{ news.title }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                 <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>{{news.source}}:{{ news.create_time }}</h2>
+                            <ul class="header-dropdown dropdown">
+
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:void(0);"><i class="icon-heart"></i> 点赞</a></li>
+                                        <li><a href="javascript:void(0);"><i class="icon-star"></i> 收藏</a></li>
+                                         {% if session['is_admin'] %}
+                                             <li><a href="javascript:void(0);"><i class=" icon-social-dropbox"></i> 删除</a></li>
+                                         {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                       <p class="card-text"><small class="text-muted">{{ news.digest }}</small></p>
+                            <div class="align-left">{{ news.content }}
+                            </div>
+                            <img class="card-img-bottom" src="{{ url_for('static',filename='uploads/index_image/'+news.index_image_url) }}" alt="Card image cap">
+{#							<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />#}
+{##}
+{#                            <div id="world-map-markers" class="jvector-map" style="height: 245px"></div>#}
+{#							<script src="https://webapi.amap.com/maps?v=1.4.15&key=您申请的key值"></script>#}
+{#												<script>#}
+{#													var map = new AMap.Map('world-map-markers', {#}
+{#														resizeEnable: true, //是否监控地图容器尺寸变化#}
+{#														zoom:11, //初始化地图层级#}
+{#														center: [116.397428, 39.90923] //初始化地图中心点#}
+{#													});#}
+{#												</script>#}
+                            {% if news.video %}
+
+                                <div id="dplayer1"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+
+</div>
+    <script src="{{ url_for("static",filename="assets/bundles/libscripts.bundle.js") }}"></script>
+    <script src="{{ url_for("static",filename="assets/bundles/vendorscripts.bundle.js") }}"></script>
+    <script src="{{ url_for("static",filename="assets/bundles/mainscripts.bundle.js") }}"></script>
+        <script src="{{ url_for('static',filename='dplayer/plugin/flv.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='dplayer/plugin/hls.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='dplayer/dist/DPlayer.min.js') }}"></script>
+    {% if video_exist %}
+
+        <script>
+            var dp1 = new DPlayer({
+                element: document.getElementById('dplayer1'),
+                video: {
+                    url: "{{ url_for('static',filename='uploads/videos/')}}{{ news.video}}",
+                },
+
+            });
+        </script>
+    {% endif %}
+</body>
+
+{% block scripts %}
+
+
+{% endblock %}
+
+{% endblock %}
